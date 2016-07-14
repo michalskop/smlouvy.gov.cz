@@ -1,0 +1,5 @@
+dev
+dev/*
+__pycache__
+log.csv
+.~lock.*
