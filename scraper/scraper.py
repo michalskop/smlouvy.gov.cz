@@ -16,7 +16,7 @@ git_ssh_identity_file = settings.ssh_file
 o = repo.remotes.origin
 git_ssh_cmd = 'ssh -i %s' % git_ssh_identity_file
 
-path = "../data/"
+path = settings.git_dir + "data/"
 
 # get last date
 with open(path + "log.csv") as fin:
