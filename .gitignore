@@ -3,3 +3,5 @@ dev/*
 __pycache__
 log.csv
 .~lock.*
+settings.*
+data.xlsx

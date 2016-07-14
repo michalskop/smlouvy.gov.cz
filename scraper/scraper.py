@@ -2,13 +2,24 @@
 
 import csv
 import datetime
+import git
 import json
 import openpyxl
 import requests
 import xmltodict
 
+import settings
+
+# repo settings
+repo = git.Repo(settings.git_dir)
+git_ssh_identity_file = settings.ssh_file
+o = repo.remotes.origin
+git_ssh_cmd = 'ssh -i %s' % git_ssh_identity_file
+
+path = "../data/"
+
 # get last date
-with open("../data/log.csv") as fin:
+with open(path + "log.csv") as fin:
     csvdr = csv.DictReader(fin)
     for row in csvdr:
         if row['success']:
@@ -26,14 +37,14 @@ r = requests.get(url, params=params)
 ok = True
 if r.status_code == 200:
     # save table in XLSX
-    with open("../dev/data.xlsx", "wb") as fout:
+    with open(path + "data.xlsx", "wb") as fout:
         fout.write(r.content)
 
 
     # get existing table in CSV
     table_ids = []  #'https://smlouvy.gov.cz/smlouva/5901'
     existing_ids = []   #'5901'
-    with open("../data/table.csv") as fin:
+    with open(path + "table.csv") as fin:
         csvdr = csv.DictReader(fin)
         for row in csvdr:
             table_ids.append(row['Adresa záznamu'])
@@ -42,7 +53,7 @@ if r.status_code == 200:
     # read table from XLSX
     newtabledata = []
     i = 0
-    wb = openpyxl.load_workbook("../dev/data.xlsx")
+    wb = openpyxl.load_workbook(path + "data.xlsx")
     for ws in wb:
         for row in ws:
             if i == 0:
@@ -62,7 +73,7 @@ if r.status_code == 200:
             i += 1
 
     # write new lines
-    with open ("../data/table.csv", "a") as fout:
+    with open (path + "table.csv", "a") as fout:
         csvw = csv.writer(fout)
         for row in newtabledata:
             csvw.writerow(row)
@@ -70,10 +81,10 @@ if r.status_code == 200:
     # read data:
     data = []
     data_ids = []
-    with open("../data/data.csv") as fin:
+    with open(path + "data.csv") as fin:
         reader = csv.reader(fin)
         header = next(reader)
-    with open("../data/data.csv") as fin:
+    with open(path + "data.csv") as fin:
         csvdr = csv.DictReader(fin)
         for row in csvdr:
             data.append(row)
@@ -133,7 +144,7 @@ if r.status_code == 200:
 
     # read all XMLs:
     n = 0
-    with open ("../data/data.csv", "a") as fout:
+    with open (path + "data.csv", "a") as fout:
         csvdw = csv.DictWriter(fout, fieldnames=header)
         for eid in existing_ids:
             if not eid in data_ids:
@@ -151,10 +162,10 @@ if r.status_code == 200:
                     ok = False
                 # raise(Exception)
 
-with open("../data/log.csv", "a") as fin:
+with open(path + "log.csv", "a") as fin:
     reader = csv.reader(fin)
     header = next(reader)
-with open("../data/log.csv", "a") as fin:
+with open(path + "log.csv", "a") as fin:
     csvdr = csv.DictWriter(fin, fieldnames=header)
     csvdr.writerow({
         'date': datetime.datetime.now().isoformat(),
@@ -162,3 +173,17 @@ with open("../data/log.csv", "a") as fin:
         'contracts': n,
         'last_day': lastday
     })
+
+
+# bots text for commit
+
+
+a = repo.git.add(settings.git_dir + path + "log.csv")
+a = repo.git.add(settings.git_dir + path + "data.csv")
+a = repo.git.add(settings.git_dir + path + "table.csv")
+
+with repo.git.custom_environment(GIT_COMMITTER_NAME=settings.bot_name, GIT_COMMITTER_EMAIL=settings.bot_email):
+    repo.git.commit(message="happily updating data: %s contracts" % str(n), author="%s <%s>" % (settings.bot_name, settings.bot_email))
+with repo.git.custom_environment(GIT_SSH_COMMAND=git_ssh_cmd):
+        o.push()
+message="happily updating data: %s contracts" % str(n)
