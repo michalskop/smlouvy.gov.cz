@@ -4,7 +4,9 @@ import csv
 import datetime
 import git
 import json
+from lxml import etree
 import openpyxl
+import os
 import requests
 import xmltodict
 
@@ -153,7 +155,20 @@ if r.status_code == 200:
                 print(str(n) + ": " + url)
                 n += 1
                 if r.status_code == 200:
-                    djson = xmltodict.parse(r.text)
+                    with open(path + "dev/" + eid + ".xml", "wb") as fxml:
+                        fxml.write(r.content)
+
+                    with open(path + "dev/" + eid + ".xml") as fxml:
+                        tree = etree.parse(path + "dev/" + eid + ".xml").getroot()
+                    os.remove(path + "dev/" + eid + ".xml")
+                    try:
+                        namespace = tree.nsmap[None]
+                        elem = tree.xpath('//x:prilohy', namespaces={'x': namespace})[0]
+                        elem.getparent().remove(elem)
+                    except:
+                        nothing = None
+                    xmlstring = etree.tostring(tree)
+                    djson = xmltodict.parse(xmlstring)
                     newitem = {}
                     for h in header:
                         newitem[h] = name2name(h,djson)
