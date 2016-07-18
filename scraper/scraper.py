@@ -200,7 +200,7 @@ with open(path + "log.csv", "a") as fin:
 # bots text for commit
 
 
-a = repo.git.add(path + "log.csv")
+# a = repo.git.add(path + "log.csv")
 a = repo.git.add(path + "data.csv")
 a = repo.git.add(path + "table.csv")
 
