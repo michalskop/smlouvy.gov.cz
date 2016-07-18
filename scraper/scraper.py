@@ -1,5 +1,8 @@
 # get lists of new contracts (published after last succesful run)
 
+# note: I started to use xmltodict, but run into probles with unsufficient memory
+# on the server, so used lxml to delete the attachements from the XMLs
+
 import csv
 import datetime
 import git
@@ -159,7 +162,12 @@ if r.status_code == 200:
                         fxml.write(r.content)
 
                     with open(path + "dev/" + eid + ".xml") as fxml:
-                        tree = etree.parse(path + "dev/" + eid + ".xml").getroot()
+                        try:
+                            tree = etree.parse(path + "dev/" + eid + ".xml").getroot()
+                        os.remove(path + "dev/" + eid + ".xml")
+                        except:
+                            ht = etree.XMLParser(huge_tree=True)
+                            tree = etree.parse(path + "dev/" + eid + ".xml",ht).getroot()
                     os.remove(path + "dev/" + eid + ".xml")
                     try:
                         namespace = tree.nsmap[None]
