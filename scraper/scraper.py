@@ -184,7 +184,7 @@ if r.status_code == 200:
                     ok = False
                 # raise(Exception)
 
-with open(path + "log.csv", "a") as fin:
+with open(path + "log.csv") as fin:
     reader = csv.reader(fin)
     header = next(reader)
 with open(path + "log.csv", "a") as fin:
@@ -200,9 +200,9 @@ with open(path + "log.csv", "a") as fin:
 # bots text for commit
 
 
-a = repo.git.add(settings.git_dir + path + "log.csv")
-a = repo.git.add(settings.git_dir + path + "data.csv")
-a = repo.git.add(settings.git_dir + path + "table.csv")
+a = repo.git.add(path + "log.csv")
+a = repo.git.add(path + "data.csv")
+a = repo.git.add(path + "table.csv")
 
 with repo.git.custom_environment(GIT_COMMITTER_NAME=settings.bot_name, GIT_COMMITTER_EMAIL=settings.bot_email):
     repo.git.commit(message="happily updating data: %s contracts" % str(n), author="%s <%s>" % (settings.bot_name, settings.bot_email))
