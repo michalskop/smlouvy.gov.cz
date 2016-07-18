@@ -164,7 +164,6 @@ if r.status_code == 200:
                     with open(path + "dev/" + eid + ".xml") as fxml:
                         try:
                             tree = etree.parse(path + "dev/" + eid + ".xml").getroot()
-                        os.remove(path + "dev/" + eid + ".xml")
                         except:
                             ht = etree.XMLParser(huge_tree=True)
                             tree = etree.parse(path + "dev/" + eid + ".xml",ht).getroot()
