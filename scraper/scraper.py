@@ -25,10 +25,11 @@ o.pull()
 path = settings.git_dir + "data/"
 
 # get last date
+newlastday = datetime.datetime.now().strftime('%Y-%m-%d')
 with open(path + "log.csv") as fin:
     csvdr = csv.DictReader(fin)
     for row in csvdr:
-        if row['success']:
+        if bool(row['success']):
             lastday = row['last_day']
 
 # get table in XLSX
@@ -212,5 +213,5 @@ with open(path + "log.csv", "a") as fin:
         'date': datetime.datetime.now().isoformat(),
         'success': ok,
         'contracts': n,
-        'last_day': lastday
+        'last_day': newlastday
     })
