@@ -20,6 +20,7 @@ repo = git.Repo(settings.git_dir)
 git_ssh_identity_file = settings.ssh_file
 o = repo.remotes.origin
 git_ssh_cmd = 'ssh -i %s' % git_ssh_identity_file
+o.pull()
 
 path = settings.git_dir + "data/"
 
@@ -184,17 +185,7 @@ if r.status_code == 200:
                     ok = False
                 # raise(Exception)
 
-with open(path + "log.csv") as fin:
-    reader = csv.reader(fin)
-    header = next(reader)
-with open(path + "log.csv", "a") as fin:
-    csvdr = csv.DictWriter(fin, fieldnames=header)
-    csvdr.writerow({
-        'date': datetime.datetime.now().isoformat(),
-        'success': ok,
-        'contracts': n,
-        'last_day': lastday
-    })
+
 
 
 # bots text for commit
@@ -209,3 +200,17 @@ with repo.git.custom_environment(GIT_COMMITTER_NAME=settings.bot_name, GIT_COMMI
 with repo.git.custom_environment(GIT_SSH_COMMAND=git_ssh_cmd):
         o.push()
 message="happily updating data: %s contracts" % str(n)
+
+
+
+with open(path + "log.csv") as fin:
+    reader = csv.reader(fin)
+    header = next(reader)
+with open(path + "log.csv", "a") as fin:
+    csvdr = csv.DictWriter(fin, fieldnames=header)
+    csvdr.writerow({
+        'date': datetime.datetime.now().isoformat(),
+        'success': ok,
+        'contracts': n,
+        'last_day': lastday
+    })
