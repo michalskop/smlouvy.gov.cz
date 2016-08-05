@@ -1,0 +1,98 @@
+
+    "name": "smlouvy_gov_cz",
+    "description": "Data from Czech Register of Public Contracts",
+    "language": "cs"
+    "resources": [
+        {
+            "name": "data2.csv",
+            "path":"data/data2.csv",
+            "description": "Public Contracts",
+            "schema": {
+                "fields": [
+                    {
+                        "name": "id",
+                        "type": "integer",
+                        "description": "id"
+                    },
+                    {
+                        "name": "contract_id",
+                        "type": "integer",
+                        "description": "id"
+                    },
+                    {
+                        "name": "version_id",
+                        "type": "integer",
+                        "description": "Version id"
+                    },
+                    {
+                        "name": "url",
+                        "type": "text",
+                        "description": "url of the contract"
+                    },
+                    {
+                        "name": "published",
+                        "type": "datetime",
+                        "description": "when published"
+                    },
+                    {
+                        "name": "principal:name",
+                        "type": "text",
+                        "description": "Name of principal"
+                    },
+                    {
+                        "name": "principal:address",
+                        "type": "text",
+                        "description": "Address of the principal"
+                    },
+                    {
+                        "name": "principal:ds",
+                        "type": "text",
+                        "description": "id of DS of principal"
+                    },
+                    {
+                        "name": "subject",
+                        "type": "text",
+                        "description": "sSubject of the contract"
+                    },
+                    {
+                        "name": "concluded",
+                        "type": "datetime",
+                        "description": "Contract concluded"
+                    },
+                    {
+                        "name": "number",
+                        "type": "text",
+                        "description": "Number of the contract"
+                    },
+                    {
+                        "name": "approved_by",
+                        "type": "text",
+                        "description": "Approved by"
+                    },
+                    {
+                        "name": "value",
+                        "type": "float",
+                        "description": "Value with VAT"
+                    },
+                    {
+                        "name": "value_without_vat",
+                        "type": "float",
+                        "description": "Value without VAT"
+                    },
+                    {
+                        "name": "value_in_currency",
+                        "type": "float",
+                        "description": "Value in foreign currency"
+                    },
+                    {
+                        "name": "currency",
+                        "type": "text",
+                        "description": "Foreign currency"
+                    },
+                    {
+                        "name": "contractors",
+                        "type": "json",
+                        "description": "JSON array of contractors"
+                    }
+              ]
+}
