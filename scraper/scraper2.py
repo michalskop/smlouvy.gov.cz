@@ -22,7 +22,7 @@ path = settings.git_dir + "data/"
 with open(path + "log.csv") as fin:
     csvdr = csv.DictReader(fin)
     for row in csvdr:
-        if bool(row['success']):
+        if row['success'] == 'True':
             lastmonth = row['month']
 
 existing = {}
@@ -104,7 +104,6 @@ def name2name(h,obj):
 # get data
 actualmonth = datetime.datetime.now().strftime('%Y_%m')
 month = nextmonth(lastmonth)
-#newlastday = datetime.datetime.now().strftime('%Y-%m-%d')
 while month <= actualmonth:
     url = "https://data.smlouvy.gov.cz/dump_" + month + ".xml"
     print (url)
