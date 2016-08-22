@@ -152,7 +152,10 @@ with repo.git.custom_environment(GIT_COMMITTER_NAME=settings.bot_name, GIT_COMMI
         repo.git.commit(message="happily updating data: %s contracts" % str(n), author="%s <%s>" % (settings.bot_name, settings.bot_email))
     except:
         nothing = None
-with repo.git.custom_environment(GIT_SSH_COMMAND=git_ssh_cmd):
+try:
+    with repo.git.custom_environment(GIT_SSH_COMMAND=git_ssh_cmd):
         o.push()
+except:
+        nothing = None
 message="happily updating data: %s contracts" % str(n)
 print(message)
