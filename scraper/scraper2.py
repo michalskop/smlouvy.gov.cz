@@ -1,3 +1,9 @@
+# get lists of new contracts (published after last succesful run)
+
+# note: I started to use xmltodict, but run into probles with insufficient memory
+# on the server (needed >0.5G), so switched to local-server
+# note 2: "git pull" needs to work without any problem + git needs to be set to ssh (not https)
+
 import csv
 import datetime
 import git
@@ -13,7 +19,7 @@ repo = git.Repo(settings.git_dir)
 git_ssh_identity_file = settings.ssh_file
 o = repo.remotes.origin
 git_ssh_cmd = 'ssh -i %s' % git_ssh_identity_file
-o.pull()
+o.pull()    #note: requires git pull to run correctly from the
 
 path = settings.git_dir + "data/"
 

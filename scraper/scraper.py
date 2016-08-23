@@ -1,6 +1,6 @@
 # get lists of new contracts (published after last succesful run)
 
-# note: I started to use xmltodict, but run into probles with unsufficient memory
+# note: I started to use xmltodict, but run into probles with insufficient memory
 # on the server, so used lxml to delete the attachements from the XMLs
 
 import csv
