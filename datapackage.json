@@ -1,7 +1,7 @@
-
+{
     "name": "smlouvy_gov_cz",
     "description": "Data from Czech Register of Public Contracts",
-    "language": "cs"
+    "language": "cs",
     "resources": [
         {
             "name": "data2.csv",
@@ -52,7 +52,7 @@
                     {
                         "name": "subject",
                         "type": "text",
-                        "description": "sSubject of the contract"
+                        "description": "Subject of the contract"
                     },
                     {
                         "name": "concluded",
@@ -95,4 +95,7 @@
                         "description": "JSON array of contractors"
                     }
               ]
+            }
+        }
+    ]
 }
