@@ -5,8 +5,8 @@ Plan:
 - application ?
 
 Ready:
+- Data in a datapackage from smlouvy.gov.cz, downloadable and searchable (http://data.okfn.org/tools/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmichalskop%2Fsmlouvy.gov.cz%2Fmaster%2Fdatapackage.json)
 - Scraper for smlouvy.gov.cz
-- Data in datapackage from smlouvy.gov.cz
 - Updated daily
 
 Similar projects AFAIK:
