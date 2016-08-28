@@ -7,7 +7,7 @@ Ready:
 
 Plan:
 - RESTful API
-- application ?
+- application ??
 
 Similar projects AFAIK:
 - https://github.com/kokes/smlouvy
