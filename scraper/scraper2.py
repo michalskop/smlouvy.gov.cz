@@ -160,7 +160,7 @@ with repo.git.custom_environment(GIT_COMMITTER_NAME=settings.bot_name, GIT_COMMI
         nothing = None
 try:
     with repo.git.custom_environment(GIT_SSH_COMMAND=git_ssh_cmd):
-        o.push()
+        repo.git.push()
 except:
         nothing = None
 message="happily updating data: %s contracts" % str(n)
